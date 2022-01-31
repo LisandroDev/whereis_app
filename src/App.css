@@ -1,38 +1,67 @@
-.App {
-  text-align: center;
+
+
+.game-image {
+  height: auto;
+  max-width: 100%;
+  cursor: none;
 }
 
-.App-logo {
-  height: 40vmin;
+.cursor-game {
+  position: absolute;
+  border: 4px red solid;
+  width: calc(15vw / 6);
+  height: calc(15vw / 6);
+  display: block;
+  border-radius: 51%;
+  border-style: dotted;
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.context-menu {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  list-style: none;
+  padding: 1.35em;
+  gap: 1.35em;
+  border-radius: 14px;
+  height: auto;
+  width: 5rem;
+  font-size: 0.8rem;
+  background-color: rgba(21, 105, 138, 0.6);
+  position: absolute;
 }
 
-.App-link {
-  color: #61dafb;
+.button-contextmenu {
+  display: inline-block;
+  padding: 0.35em 1.2em;
+  border: 0.1em solid #ffffff;
+  margin: 0 0.3em 0.3em 0;
+  font-size: 0.6rem;
+  border-radius: 0.2em;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  color: black;
+  width: 95%;
+  text-align: center;
+  transition: all 0.2s;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@media all and (max-width: 30em) {
+  button-contextmenu {
+    display: block;
+    margin: 0.4em auto;
   }
-  to {
-    transform: rotate(360deg);
-  }
+}
+
+.button-contextmenu:hover {
+  color: #000000;
+  background-color: #ffffff;
+}
+
+.game-wrapper {
+  position: relative;
 }
