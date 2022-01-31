@@ -1,6 +1,26 @@
+#root {
+  height: 100vh;
+}
 
+header {
+  width: 100%;
+  font-size: 12px;
+  min-height: 60px;
+  z-index: 50;
+}
+
+footer {
+  margin-top: auto;
+}
+
+.App {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
 
 .game-image {
+  float: top;
   height: auto;
   max-width: 100%;
   cursor: none;
