@@ -20,7 +20,7 @@ footer {
 }
 
 .game-image {
-  float: top;
+  margin-bottom: auto;
   height: auto;
   max-width: 100%;
   cursor: none;
