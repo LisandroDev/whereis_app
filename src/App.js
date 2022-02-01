@@ -1,5 +1,6 @@
 import "./App.css";
 import Game from "./Components/Game";
+import fetchCoords from "./Services/services";
 
 function App() {
   return (
