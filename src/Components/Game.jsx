@@ -49,6 +49,7 @@ function Game() {
     });
   }
 
+
   return (
     <div className="game-wrapper">
       <img
