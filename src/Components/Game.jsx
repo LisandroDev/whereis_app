@@ -1,47 +1,44 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import whereisimage from "../find_characters_image.jpg";
 import Cursor from "./Cursor";
-import useClick from "../Hooks/useClick";
 import ContextMenu from "./ContextMenu";
+import fetchCoords from "../Services/services";
 
 function Game() {
   const [mouseCoords, setmouseCoords] = useState({ x: 0, y: 0 });
-  const [isMenuViewable, setisMenuViewable] = useState(false);
   const [contextMenuCoords, setcontextMenuCoords] = useState({ x: 0, y: 0 });
-  const resDefault = { x: 3000, y: 1958 };
+  const [coordsFixedRatio, setcoordsFixedRatio] = useState({ x: 0, y: 0 });
+  const [isMenuViewable, setisMenuViewable] = useState(false);
   const [characterFound, setcharacterFound] = useState({
     turtle: false,
-    fish: false,
+    bee: false,
     squirrel: false,
   });
+
+  const resImage = { x: 3000, y: 1958 };
+
+  useEffect(() => {
+    console.log(Object.values(characterFound).every(Boolean));
+  }, [characterFound]);
 
   function onMouseMove(e) {
     setmouseCoords({ x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY });
   }
 
-  function characterSet(char) {
-    let currentState = characterFound.slice();
-    currentState[char] = true;
-    setcharacterFound(currentState);
-  }
-
   function coordsClicked(e) {
     return {
       x: Math.round(
-        (resDefault.x * e.nativeEvent.offsetX) /
-          e.nativeEvent.target.clientWidth
+        (resImage.x * e.nativeEvent.offsetX) / e.nativeEvent.target.clientWidth
       ),
       y: Math.round(
-        (resDefault.y * e.nativeEvent.offsetY) /
-          e.nativeEvent.target.clientHeight
+        (resImage.y * e.nativeEvent.offsetY) / e.nativeEvent.target.clientHeight
       ),
     };
   }
 
-  function onMouseClick(e) {
-    let coords = coordsClicked(e);
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useClick(coords.x, coords.y);
+  function onClickOpenMenu(e) {
+    const coords = coordsClicked(e);
+    setcoordsFixedRatio(coords);
     setisMenuViewable(!isMenuViewable);
     setcontextMenuCoords({
       x: e.nativeEvent.offsetX,
@@ -49,6 +46,34 @@ function Game() {
     });
   }
 
+  function checkForCharacter(dbCoords) {
+    const coords = coordsFixedRatio;
+    if (
+      coords.x < dbCoords.maxX &&
+      coords.x > dbCoords.minX &&
+      coords.y < dbCoords.maxY &&
+      coords.y > dbCoords.minY
+    ) {
+      console.log("CHARACTER FOUND");
+      return true;
+    }
+    console.log("NOT FOUND");
+    return false;
+  }
+
+  function handleCharacterFound(id) {
+    let copiedObject = JSON.parse(JSON.stringify(characterFound));
+    copiedObject[id] = true;
+    setcharacterFound(copiedObject);
+  }
+
+  async function handleOptionChoose(characterId) {
+    const dbCoords = await fetchCoords(characterId);
+    setisMenuViewable(!isMenuViewable);
+    if (checkForCharacter(dbCoords)) {
+      handleCharacterFound(characterId);
+    }
+  }
 
   return (
     <div className="game-wrapper">
@@ -57,14 +82,15 @@ function Game() {
         alt="where is img"
         className="game-image"
         draggable="false"
-        onClick={(e) => onMouseClick(e)}
+        onClick={(e) => onClickOpenMenu(e)}
         onMouseMove={(e) => onMouseMove(e)}
       />
       <Cursor x={mouseCoords.x} y={mouseCoords.y} />
       <ContextMenu
         x={contextMenuCoords.x}
         y={contextMenuCoords.y}
-        characterSet={characterSet}
+        handleOptionChoose={handleOptionChoose}
+        characterFound={characterFound}
         isViewable={isMenuViewable}
       />
     </div>
