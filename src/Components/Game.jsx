@@ -3,6 +3,8 @@ import whereisimage from "../find_characters_image.jpg";
 import Cursor from "./Cursor";
 import ContextMenu from "./ContextMenu";
 import fetchCoords from "../Services/services";
+import { toast } from "react-toastify";
+import Button from "./StartButton";
 
 function Game() {
   const [mouseCoords, setmouseCoords] = useState({ x: 0, y: 0 });
@@ -18,7 +20,9 @@ function Game() {
   const resImage = { x: 3000, y: 1958 };
 
   useEffect(() => {
-    console.log(Object.values(characterFound).every(Boolean));
+    if (Object.values(characterFound).every(Boolean)) {
+      toast.success("YOU WON!");
+    }
   }, [characterFound]);
 
   function onMouseMove(e) {
@@ -54,10 +58,10 @@ function Game() {
       coords.y < dbCoords.maxY &&
       coords.y > dbCoords.minY
     ) {
-      console.log("CHARACTER FOUND");
+      toast.success(`You found ${dbCoords.id}`);
       return true;
     }
-    console.log("NOT FOUND");
+    toast.error(`Nothing there! Try Again`);
     return false;
   }
 
@@ -77,22 +81,25 @@ function Game() {
 
   return (
     <div className="game-wrapper">
-      <img
-        src={whereisimage}
-        alt="where is img"
-        className="game-image"
-        draggable="false"
-        onClick={(e) => onClickOpenMenu(e)}
-        onMouseMove={(e) => onMouseMove(e)}
-      />
-      <Cursor x={mouseCoords.x} y={mouseCoords.y} />
-      <ContextMenu
-        x={contextMenuCoords.x}
-        y={contextMenuCoords.y}
-        handleOptionChoose={handleOptionChoose}
-        characterFound={characterFound}
-        isViewable={isMenuViewable}
-      />
+      <div className="start-background">
+        <img
+          src={whereisimage}
+          alt="where is img"
+          className="game-image"
+          draggable="false"
+          onClick={(e) => onClickOpenMenu(e)}
+          onMouseMove={(e) => onMouseMove(e)}
+        />
+        <Button />
+        <Cursor x={mouseCoords.x} y={mouseCoords.y} />
+        <ContextMenu
+          x={contextMenuCoords.x}
+          y={contextMenuCoords.y}
+          handleOptionChoose={handleOptionChoose}
+          characterFound={characterFound}
+          isViewable={isMenuViewable}
+        />
+      </div>
     </div>
   );
 }

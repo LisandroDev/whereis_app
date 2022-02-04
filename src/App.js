@@ -1,17 +1,18 @@
 import "./App.css";
 import Game from "./Components/Game";
-import fetchCoords from "./Services/services";
+import Notification from "./Components/Notification.jsx";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App _nightblue _f-cream">
+      <Notification  />
       <header>
         <h1> Test </h1>
       </header>
-      <div>
+      <main>
         <Game />
-      </div>
-      <footer>
+      </main>
+      <footer className="_nightblue">
         <h1>Github</h1>
       </footer>
     </div>

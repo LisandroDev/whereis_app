@@ -15,10 +15,10 @@ function ContextMenu(props) {
   }
 
   return (
-    <div style={DivStyle} className="context-menu">
+    <div style={DivStyle} className="_box_round _nightblue context-menu">
       <button
         style={{ pointerEvents: props.characterFound.turtle ? "none" : "auto" }}
-        className="button-contextmenu"
+        className="button _nightblue  button-contextmenu "
         value={"turtle"}
         onClick={(e) => props.handleOptionChoose(e.target.value)}
       >
@@ -26,7 +26,7 @@ function ContextMenu(props) {
       </button>
       <button
         style={{ pointerEvents: props.characterFound.bee ? "none" : "auto" }}
-        className="button-contextmenu"
+        className="button _nightblue  button-contextmenu"
         value={"bee"}
         onClick={(e) => props.handleOptionChoose(e.target.value)}
       >
@@ -36,7 +36,7 @@ function ContextMenu(props) {
         style={{
           pointerEvents: props.characterFound.squirrel ? "none" : "auto",
         }}
-        className="button-contextmenu"
+        className="button _nightblue button-contextmenu"
         value={"squirrel"}
         onClick={(e) => props.handleOptionChoose(e.target.value)}
       >
