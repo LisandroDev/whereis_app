@@ -1,17 +1,25 @@
 import useFirestore from "../Services/services";
 import { useEffect, useState } from "react";
 
-
 export default function Scoreboard(props) {
   const [players, setPlayers] = useState(null);
 
   const { fetchScoreboard } = useFirestore();
 
+  function createPlayerRow(player) {
+    return (
+      <tr key={player.name}>
+        <td>{player.name}</td>
+        <td>{player.score}</td>
+      </tr>
+    );
+  }
+
   useEffect(() => {
     fetchScoreboard().then(function (value) {
       setPlayers(value);
     });
-  }, [fetchScoreboard]);
+  }, []);
 
   return (
     <div
@@ -26,31 +34,15 @@ export default function Scoreboard(props) {
       >
         ✖
       </span>
-      <button onClick={() => console.log(players)}>testestes </button>
       <table className="_width100 _noReaction">
         <thead>
           <tr>
             <th>Name</th>
             <th>Time</th>
-            <th>Date</th>
           </tr>
         </thead>
         <tbody>
-          {" "}
-          {players === null ? (
-            <tr></tr>
-          ) : (
-            <tr>
-              <td>2</td>
-              <td>6</td>
-              <td>Fresh</td>
-            </tr>
-          )}
-          <tr>
-            <td>Apple</td>
-            <td>6</td>
-            <td>Fresh</td>
-          </tr>
+          {players == null ? null : players.map(player => createPlayerRow(player))}
         </tbody>
       </table>{" "}
     </div>

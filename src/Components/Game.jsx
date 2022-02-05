@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import whereisimage from "../find_characters_image.jpg";
 import Cursor from "./Cursor";
 import ContextMenu from "./ContextMenu";
-import fetchCoords from "../Services/services";
+import Submit from "./Submit";
 import { toast } from "react-toastify";
 import Button from "./StartButton";
 import useGetScore from "../Hooks/useGetScore";
@@ -14,12 +14,13 @@ function Game(props) {
   const [coordsFixedRatio, setcoordsFixedRatio] = useState({ x: 0, y: 0 });
   const [isMenuViewable, setisMenuViewable] = useState(false);
   const [isGameStarted, setisGameStarted] = useState(false);
+  const [isGameFinished, setIsGameFinished] = useState(false);
   const [characterFound, setcharacterFound] = useState({
     turtle: false,
     bee: false,
     squirrel: false,
   });
-
+  const [score, setScore] = useState(0);
   const { fetchCoords } = useFirestore();
   const { getScore, recordTimestamp } = useGetScore();
 
@@ -27,15 +28,21 @@ function Game(props) {
 
   useEffect(() => {
     if (Object.values(characterFound).every(Boolean)) {
-      getScore();
       toast.success("YOU WON!");
+      handleFinish()
     }
-  }, [characterFound, getScore]);
+  }, [characterFound]);
 
   function handleStart() {
     recordTimestamp();
     setisGameStarted(!isGameStarted);
     props.startTimer();
+  }
+
+  function handleFinish(){
+    props.pauseTimer();
+    setIsGameFinished(!isGameFinished);
+    setScore(getScore());
   }
 
   function onMouseMove(e) {
@@ -98,13 +105,14 @@ function Game(props) {
         src={whereisimage}
         alt="where is img"
         className={
-          isGameStarted ? "game-image" : "game_image _noReaction _blur"
+          isGameStarted  && !isGameFinished ? "game-image" : "game_image _noReaction _blur"
         }
         draggable="false"
         onClick={(e) => onClickOpenMenu(e)}
         onMouseMove={(e) => onMouseMove(e)}
       />
       <Button handleStart={handleStart} />
+      <Submit score={score} isGameFinished={isGameFinished} />
       <Cursor x={mouseCoords.x} y={mouseCoords.y} />
       <ContextMenu
         x={contextMenuCoords.x}

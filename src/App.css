@@ -58,6 +58,13 @@ footer {
   display: var(--display-button);
 }
 
+.submit-form{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: var(--display-button);
+}
 .cursor-game {
   position: absolute;
   border: 4px red solid;

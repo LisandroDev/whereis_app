@@ -10,7 +10,7 @@ export default function useGetScore() {
 
   function getScore() {
       const score = Timestamp.now().seconds;
-    console.log("TimeElapsed: ", score - initialTimeStamp);
+    return score - initialTimeStamp;
   }
 
   return { recordTimestamp, getScore };

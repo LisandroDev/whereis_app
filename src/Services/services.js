@@ -37,6 +37,7 @@ export default function useFirestore() {
     querySnapshot.forEach((doc) => {
       itemContainer.push(doc.data())
     });
+    console.log("I fetch scoreboard!")
     return itemContainer;
   }
 

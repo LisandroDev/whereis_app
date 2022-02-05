@@ -7,7 +7,7 @@ import Scoreboard from "./Components/Scoreboard";
 import { useState } from "react";
 function App() {
   const [scoreboardOpen, setscoreboardOpen] = useState(false);
-  const { minutes, seconds, start, reset, isRunning } = useStopwatch({
+  const { minutes, seconds, start, pause, isRunning } = useStopwatch({
     autoStart: false,
   });
 
@@ -26,7 +26,7 @@ function App() {
         seconds={seconds}
       />
       <main>
-        <Game startTimer={start} resetTimer={reset} />
+        <Game  startTimer={start}  pauseTimer={pause} />
       </main>
       <footer className="_nightblue">
         <p className="_high">GitHub</p>
