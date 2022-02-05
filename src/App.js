@@ -1,19 +1,35 @@
+import { useStopwatch } from "react-timer-hook";
 import "./App.css";
 import Game from "./Components/Game";
+import Header from "./Components/Header";
 import Notification from "./Components/Notification.jsx";
-
+import Scoreboard from "./Components/Scoreboard";
+import { useState } from "react";
 function App() {
+  const [scoreboardOpen, setscoreboardOpen] = useState(false);
+  const { minutes, seconds, start, reset, isRunning } = useStopwatch({
+    autoStart: false,
+  });
+
+  function scoreboardToggle() {
+    setscoreboardOpen(!scoreboardOpen);
+  }
+
   return (
     <div className="App _nightblue _f-cream">
-      <Notification  />
-      <header>
-        <h1> Test </h1>
-      </header>
+      <Scoreboard isOpen={scoreboardOpen} scoreboardToggle={scoreboardToggle} />
+      <Notification />
+      <Header
+        isRunning={isRunning}
+        minutes={minutes}
+        scoreboardToggle={scoreboardToggle}
+        seconds={seconds}
+      />
       <main>
-        <Game />
+        <Game startTimer={start} resetTimer={reset} />
       </main>
       <footer className="_nightblue">
-        <h1>Github</h1>
+        <p className="_high">GitHub</p>
       </footer>
     </div>
   );

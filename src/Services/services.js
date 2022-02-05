@@ -1,25 +1,46 @@
 import { initializeApp } from "firebase/app";
-import { Timestamp } from "firebase/firestore";
-import { getFirestore, getDoc, doc, Firestore } from "firebase/firestore";
+import {
+  getFirestore,
+  getDoc,
+  doc,
+  query,
+  collection,
+  orderBy,
+  limit,
+  getDocs
+} from "firebase/firestore";
 
-const firebaseApp = initializeApp({
+ initializeApp({
   authDomain: "whereis-c254a.firebaseapp.com",
   projectId: "whereis-c254a",
 });
 
 const db = getFirestore();
 
-async function fetchCoords(id) {
-  const docRef = doc(db, "charactersCoords", id);
-  const docSnap = await getDoc(docRef);
+export default function useFirestore() {
+  async function fetchCoords(id) {
+    const docRef = doc(db, "charactersCoords", id);
+    const docSnap = await getDoc(docRef);
 
-  if (docSnap.exists()) {
-    console.log(docSnap.data());
-    console.log(Timestamp.now());
-    return docSnap.data();
-  } else {
-    return null;
+    if (docSnap.exists()) {
+      return docSnap.data();
+    } else {
+      return null;
+    }
   }
-}
 
-export default fetchCoords;
+  async function fetchScoreboard() {
+    const scoreboardItems = collection(db, "scoreboard");
+    const items = query(scoreboardItems, orderBy("rawScore"), limit(10));
+    const querySnapshot = await getDocs(items);
+    const itemContainer = [];
+    querySnapshot.forEach((doc) => {
+      itemContainer.push(doc.data())
+    });
+    return itemContainer;
+  }
+
+
+
+  return { fetchCoords, fetchScoreboard };
+}

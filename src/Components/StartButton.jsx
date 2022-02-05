@@ -1,5 +1,6 @@
-export default function Button() {
+export default function Button(props) {
   function onStart() {
+    props.handleStart();
     document.documentElement.style.setProperty("--img-opacity", 1);
     document.documentElement.style.setProperty("--events-img", "auto");
     document.documentElement.style.setProperty("--bg-color", "none");
