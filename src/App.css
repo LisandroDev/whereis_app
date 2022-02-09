@@ -3,10 +3,14 @@
   height: 100vh;
 }
 
+
+a:link, a:visited, a:focus, a:active{
+  text-decoration: none;
+}
+
 :root {
-  --img-opacity: 0.5;
+  --toastify-color-dark: #2C3E50 !important;
   --events-img: none;
-  --bg-color: black;
   --display-button: initial;
   --cursor-display: none;
 }
@@ -15,7 +19,7 @@ header {
   width: 100%;
   font-size: 12px;
   min-height: 60px;
-  z-index: 50;
+  /* z-index: 50; */
 }
 
 footer {
@@ -111,4 +115,18 @@ footer {
 
 .game-wrapper {
   position: relative;
+}
+
+.svgs{
+  min-width: 9px;
+  max-width: 36px;
+  vertical-align:middle
+}
+
+.testo{
+  margin-right: 15px;
+}
+
+.scoreboard{
+  z-index: 20;
 }

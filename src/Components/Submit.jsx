@@ -1,14 +1,28 @@
 import { useRef, useState } from "react";
 import useSubmit from "../Hooks/useSubmit";
+import validator from "validator";
+import { toast } from "react-toastify";
+
+
 export default function Submit(props) {
   const inputValue = useRef();
   const [alreadyPush, setalreadyPush] = useState(false);
 
   const { pushToScoreboard, secondsFormat } = useSubmit();
 
+  function validateInput(input){
+    return validator.isAlphanumeric(input)
+  };
+
   function onClick(name, score) {
-    pushToScoreboard(name, score);
-    setalreadyPush(!alreadyPush);
+    if(validateInput(name)){
+      pushToScoreboard(name, score);
+      setalreadyPush(!alreadyPush);
+      toast.success('Score submitted!')
+    }
+    else{
+      toast.error('Only letters and numbers without whitespaces !')
+    }
   }
 
   return (
@@ -27,7 +41,7 @@ export default function Submit(props) {
         <fieldset className="_alignCenter">
           <div className="row _alignCenter">
             <div className="col m1-7 _alignCenter">
-              <label className="_alignCenter " for="name">
+              <label className="_alignCenter " htmlFor="name">
                 Enter nickname
               </label>
               <input
@@ -35,8 +49,7 @@ export default function Submit(props) {
                 className="_alignCenter"
                 type="text"
                 placeholder="Jorge"
-                id="name"
-              />
+                id="name"/>
             </div>
           </div>
           <button
@@ -48,16 +61,14 @@ export default function Submit(props) {
             }
             onClick={() => onClick(inputValue.current.value, props.score)}
           >
-            Submit
+            Submit score
           </button>
           <br />
-          <div>
             {" "}
-            <button className="_alignCenter _primary button ">Try again</button>
+            <button className="_alignCenter _primary button  testo"> Restart </button>
             <button className="_alignCenter _primary button _danger">
               Don't submit
             </button>
-          </div>
         </fieldset>
       </form>
     </div>

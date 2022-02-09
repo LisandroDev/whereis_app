@@ -1,10 +1,12 @@
-import { useStopwatch } from "react-timer-hook";
 import "./App.css";
 import Game from "./Components/Game";
 import Header from "./Components/Header";
 import Notification from "./Components/Notification.jsx";
 import Scoreboard from "./Components/Scoreboard";
+import Footer from "./Components/Footer";
 import { useState } from "react";
+import { useStopwatch } from "react-timer-hook";
+
 function App() {
   const [scoreboardOpen, setscoreboardOpen] = useState(false);
   const { minutes, seconds, start, pause, isRunning } = useStopwatch({
@@ -28,9 +30,7 @@ function App() {
       <main>
         <Game  startTimer={start}  pauseTimer={pause} />
       </main>
-      <footer className="_nightblue">
-        <p className="_high">GitHub</p>
-      </footer>
+      <Footer />
     </div>
   );
 }

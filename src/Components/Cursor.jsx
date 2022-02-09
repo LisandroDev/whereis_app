@@ -13,7 +13,7 @@ function Cursor(props) {
     <div
       ref={cursorElement}
       id="cursor"
-      className="cursor-game _hide_mobile "
+      className="cursor-game _hide_mobile _hide-phablet _hide-tablet"
       style={position}
     ></div>
   );

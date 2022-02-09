@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import whereisimage from "../find_characters_image.jpg";
+import whereisimage from "../Images/find_characters_image.jpg";
 import Cursor from "./Cursor";
 import ContextMenu from "./ContextMenu";
 import Submit from "./Submit";
 import { toast } from "react-toastify";
 import Button from "./StartButton";
 import useGetScore from "../Hooks/useGetScore";
-import useFirestore from "../Services/services";
+import useFirestore from "../Hooks/useFirestore";
 
 function Game(props) {
   const [mouseCoords, setmouseCoords] = useState({ x: 0, y: 0 });
@@ -31,6 +31,7 @@ function Game(props) {
       toast.success("YOU WON!");
       handleFinish()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [characterFound]);
 
   function handleStart() {

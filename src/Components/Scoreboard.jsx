@@ -1,4 +1,4 @@
-import useFirestore from "../Services/services";
+import useFirestore from "../Hooks/useFirestore";
 import { useEffect, useState } from "react";
 
 export default function Scoreboard(props) {
@@ -19,14 +19,16 @@ export default function Scoreboard(props) {
     fetchScoreboard().then(function (value) {
       setPlayers(value);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div
       className={
-        props.isOpen ? "modalbox-modal-content _f-black centerxy " : "_hidden"
+        props.isOpen ? "modalbox-modal-content _f-black centerxy scoreboard" : "_hidden"
       }
     >
+    <legend className="_alignCenter"><h5>Leaderboard</h5></legend>
       <span
         onClick={props.scoreboardToggle}
         className="-close"
